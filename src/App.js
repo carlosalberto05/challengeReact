@@ -193,15 +193,45 @@ const Component = ({
     let newWidth = width;
     let newHeight = height;
 
-    const positionMaxTop = top + height;
-    const positionMaxLeft = left + width;
+    // Verificar límite superior
+    if (top < 0) {
+      newTop = 0;
+    }
 
+    // Verificar límite izquierdo
+    if (left < 0) {
+      newLeft = 0;
+    }
+
+    // Verificar límite inferior
+    const positionMaxTop = top + height;
     if (positionMaxTop > parentBounds.height) {
       newTop = parentBounds.height - height;
+      if (newTop < 0) {
+        newTop = 0;
+        newHeight = parentBounds.height;
+      }
     }
+
+    // Verificar límite derecho
+    const positionMaxLeft = left + width;
     if (positionMaxLeft > parentBounds.width) {
       newLeft = parentBounds.width - width;
+      if (newLeft < 0) {
+        newLeft = 0;
+        newWidth = parentBounds.width;
+      }
     }
+
+    // const positionMaxTop = top + height;
+    // const positionMaxLeft = left + width;
+
+    // if (positionMaxTop > parentBounds.height) {
+    //   newTop = parentBounds.height - height;
+    // }
+    // if (positionMaxLeft > parentBounds.width) {
+    //   newLeft = parentBounds.width - width;
+    // }
 
     return { top: newTop, left: newLeft, width: newWidth, height: newHeight };
   };
